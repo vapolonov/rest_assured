@@ -1,25 +1,23 @@
 package tests;
 
-import dto.User;
+import static org.hamcrest.Matchers.*;
+
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import otus.dto.UserDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.Matchers.*;
-
 /**
  * CreateUserTest
- *
- * @author Alexander Suvorov
  */
-public class CreateUserTest extends UserBaseTest {
+public class CreateUserTest extends BaseTest {
 
   @Test
   public void checkCreateUser() {
     Response response;
-    User user;
+    UserDTO user;
     String expectedEmail = "Test@mail.ru";
     String actualType;
     String type = "unknown";
@@ -27,7 +25,7 @@ public class CreateUserTest extends UserBaseTest {
     String expectedType = "unknown";
     Long id = 101L;
 
-    user = User.builder()
+    user = UserDTO.builder()
         .email(expectedEmail)
         .firstName("FirstName")
         .id(id)
@@ -47,10 +45,8 @@ public class CreateUserTest extends UserBaseTest {
         .statusCode(HttpStatus.SC_OK)
         .time(lessThan(5000L))
         .body("type", equalTo(expectedType))
-        .body("message", comparesEqualTo(id.toString()));
-//              .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/CreateUser.json"));
-
-//
+        .body("message", comparesEqualTo(id.toString()))
+                  .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/CreateUser.json"));
 
     //Json path  = Groovy's GPath
     // https://www.javadoc.io/doc/io.rest-assured/json-path/3.0.0/io/restassured/path/json/JsonPath.html
@@ -65,7 +61,7 @@ public class CreateUserTest extends UserBaseTest {
     // Объекты (hasItem, hasKey, ...)    body("store.book.category", hasItem("fiction"))
     //Поддерживает методы min, max, size
 
-  /*      { "store": {
+    /*      { "store": {
             "book": [
             { "category": "reference",
                     "author": "Nigel Rees",
@@ -92,9 +88,9 @@ public class CreateUserTest extends UserBaseTest {
 
 
     //3
-       /* actualEmail = response.then().extract().body().as(User.class).getMEmail();
+    /* actualEmail = response.then().extract().body().as(User.class).getMEmail();
 
-        Assertions.assertEquals(expectedEmail, actualEmail, errorMessageEmail);*/
+    Assertions.assertEquals(expectedEmail, actualEmail, errorMessageEmail);*/
 
     //Hamcrest vs  Assertions  ?
 
