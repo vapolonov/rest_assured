@@ -16,10 +16,13 @@
     <surefire.version>3.5.3</surefire.version>
     <compiler.version>3.14.0</compiler.version>
     <spotbugs.version>4.9.3.2</spotbugs.version>
+    <spotbugs.annotations.version>4.9.8</spotbugs.annotations.version>
     <mavencheckstyle.version>3.6.0</mavencheckstyle.version>
     <restAssured.version>5.5.6</restAssured.version>
     <lombok.version>1.18.38</lombok.version>
     <jsonSchemaValidator.version>5.5.6</jsonSchemaValidator.version>
+    <jackson.mapper.version>1.9.13</jackson.mapper.version>
+    <guice.version>7.0.0</guice.version>
     <base.url>https://otus.ru</base.url>
     <timeout>20</timeout>
   </properties>
@@ -53,14 +56,20 @@
     <dependency>
       <groupId>org.codehaus.jackson</groupId>
       <artifactId>jackson-mapper-asl</artifactId>
-      <version>1.9.13</version>
+      <version>${jackson.mapper.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.github.spotbugs</groupId>
       <artifactId>spotbugs-annotations</artifactId>
-      <version>4.9.8</version>
+      <version>${spotbugs.annotations.version}</version>
       <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>${guice.version}</version>
     </dependency>
 
   </dependencies>

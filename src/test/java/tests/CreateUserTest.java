@@ -2,17 +2,25 @@ package tests;
 
 import static org.hamcrest.Matchers.*;
 
+import com.google.inject.Inject;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.extension.ExtendWith;
 import otus.dto.UserDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import otus.extension.ApiExtension;
+import otus.services.UserApi;
 
 /**
  * CreateUserTest
  */
-public class CreateUserTest extends BaseTest {
+@ExtendWith(ApiExtension.class)
+public class CreateUserTest {
+
+  @Inject
+  private UserApi userApi;
 
   @Test
   public void checkCreateUser() {

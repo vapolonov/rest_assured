@@ -1,19 +1,25 @@
 package otus.services;
 
-import io.restassured.RestAssured;
+import com.google.inject.Inject;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import otus.dto.PetDTO;
 
 public class PetApi {
 
-  private static final String BASE_URL = "https://petstore.swagger.io/v2";
+  private final RequestSpecification request;
+
   private static final String PET = "/pet";
   private static final String STATUS = "/findByStatus";
 
+  @Inject
+  public PetApi(RequestSpecification request) {
+    this.request = request;
+  }
+
   public Response addNewPet(PetDTO pet) {
-    return RestAssured.given()
-        .baseUri(BASE_URL)
+    return request
         .contentType(ContentType.JSON)
         .with()
         .body(pet)
@@ -23,22 +29,19 @@ public class PetApi {
   }
 
   public Response getPetById(Long petId) {
-    return RestAssured.given()
-        .baseUri(BASE_URL)
+    return request
         .when()
         .get(PET + "/"+ petId);
   }
 
   public Response deletePetById(Long petId) {
-    return RestAssured.given()
-        .baseUri(BASE_URL)
+    return request
         .when()
         .delete(PET + "/"+ petId);
   }
 
   public Response findPetByStatus(String status) {
-    return RestAssured.given()
-        .baseUri(BASE_URL)
+    return request
         .queryParam("status", status)
         .when()
         .get(PET + STATUS);

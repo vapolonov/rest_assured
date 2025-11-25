@@ -1,26 +1,22 @@
 package otus.services;
 
-import static io.restassured.RestAssured.given;
-
-import io.restassured.http.ContentType;
+import com.google.inject.Inject;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import otus.dto.UserDTO;
 
 public class UserApi {
-  private static final String BASE_URL = "https://petstore.swagger.io/v2";
-  private static final String USER = "/user";
-  private RequestSpecification spec;
 
-  public UserApi() {
-    spec = given()
-        .baseUri(BASE_URL)
-        .contentType(ContentType.JSON);
+  private final RequestSpecification request;
+  private static final String USER = "/user";
+
+  @Inject
+  public UserApi(RequestSpecification request) {
+    this.request = request;
   }
 
   public Response createUser(UserDTO user) {
-    return
-        given(spec)
+    return request
             .with()
             .body(user)
             .log().all()

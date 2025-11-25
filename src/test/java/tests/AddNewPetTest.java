@@ -2,17 +2,25 @@ package tests;
 
 import static org.hamcrest.Matchers.*;
 
+import com.google.inject.Inject;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import otus.dto.CategoryDTO;
 import otus.dto.PetDTO;
 import otus.dto.TagDTO;
+import otus.extension.ApiExtension;
+import otus.services.PetApi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddNewPetTest extends BaseTest {
+@ExtendWith(ApiExtension.class)
+public class AddNewPetTest {
+
+  @Inject
+  private PetApi petApi;
 
   /*
   1. Создание нового питомца
